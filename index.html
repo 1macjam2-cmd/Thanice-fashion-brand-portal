@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanice Staff Portal</title>
+    <style>
+        /* Color Palette Root Variables */
+        :root {
+            --navy-dark: #0A192F;
+            --navy-bright: #172A45;
+            --royal-blue: #4169E1;
+            --gold: #FFD700;
+            --text-light: #F4F6F9;
+            --text-muted: #8892B0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--navy-dark);
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Abstract Creative Background Elements */
+        body::before, body::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            z-index: -1;
+            filter: blur(80px);
+            opacity: 0.15;
+        }
+
+        body::before {
+            width: 300px;
+            height: 300px;
+            background: var(--royal-blue);
+            top: 10%;
+            left: -5%;
+        }
+
+        body::after {
+            width: 250px;
+            height: 250px;
+            background: var(--gold);
+            bottom: 20%;
+            right: -5%;
+        }
+
+        /* Main Container */
+        .portal-container {
+            max-width: 800px;
+            width: 90%;
+            margin: 60px auto;
+            background: rgba(23, 42, 69, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .portal-container:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 215, 0, 0.3);
+            box-shadow: 0 25px 50px rgba(255, 215, 0, 0.05);
+        }
+
+        /* Header Style */
+        header {
+            text-align: center;
+            margin-bottom: 35px;
+            border-bottom: 2px solid rgba(65, 105, 225, 0.2);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            color: var(--gold);
+            font-size: 2.2rem;
+            letter-spacing: 1px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        /* Content Sections */
+        .profile-section {
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: var(--royal-blue);
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        h2::after {
+            content: '';
+            flex-grow: 1;
+            height: 1px;
+            background: rgba(65, 105, 225, 0.2);
+            margin-left: 15px;
+        }
+
+        p {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 1.05rem;
+        }
+
+        /* Interactive Tech Stack Tags */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .tech-tag {
+            background: rgba(65, 105, 225, 0.1);
+            border: 1px solid rgba(65, 105, 225, 0.3);
+            color: var(--text-light);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            cursor: default;
+        }
+
+        .tech-tag:hover {
+            background: var(--royal-blue);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(65, 105, 225, 0.3);
+        }
+
+        /* Notification Badge Concept */
+        .status-badge {
+            display: inline-block;
+            background: rgba(255, 215, 0, 0.1);
+            color: var(--gold);
+            border: 1px solid var(--gold);
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <main class="portal-container">
+        <div class="status-badge">PORTAL ACTIVE</div>
+        
+        <header>
+            <h1>Elite Corp: DevOps Engineering Division</h1>
+        </header>
+        
+        <section class="profile-section">
+            <h2>Engineer Biography</h2>
+            <p>
+                As a newly contracted DevOps Engineer at Thanice fashion brand, I specialize in implementing scalable architecture, maintaining system high availability, and optimizing standardized Git-flow pipelines across international engineering teams.
+            </p>
+        </section>
+
+        <section class="profile-section">
+            <h2>Current DevOps Toolstack</h2>
+            <div class="tech-stack">
+                <span class="tech-tag">Git</span>
+                <span class="tech-tag">GitHub</span>
+                <span class="tech-tag">HTML & CSS</span>
+            </div>
+        </section>
+    </main>
+
+    </body>
+</html>
