@@ -3,193 +3,1222 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thanice Staff Portal</title>
+    <title>Thanice Digital Suite — Elite Corp DevOps</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        /* Color Palette Root Variables */
         :root {
-            --navy-dark: #0A192F;
-            --navy-bright: #172A45;
-            --royal-blue: #4169E1;
-            --gold: #FFD700;
-            --text-light: #F4F6F9;
-            --text-muted: #8892B0;
+            --color-navy-deep: #030A16;
+            --color-navy-main: #0A1424;
+            --color-navy-surface: #111F35;
+            --color-navy-line: #1E314D;
+            --color-royal-blue: #2563EB;
+            --color-royal-glow: rgba(37, 99, 235, 0.15);
+            --color-gold: #ECC200;
+            --color-gold-bright: #FFD700;
+            --color-gold-glow: rgba(255, 215, 0, 0.12);
+            --color-emerald: #10B981;
+            --color-emerald-glow: rgba(16, 185, 129, 0.15);
+            
+            --text-primary: #F8FAFC;
+            --text-secondary: #94A3B8;
+            --text-muted: #64748B;
+            
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            box-sizing: border-box;
+            font-family: var(--font-sans);
+            -webkit-font-smoothing: antialiased;
         }
 
         body {
-            background-color: var(--navy-dark);
-            color: var(--text-light);
+            background-color: var(--color-navy-deep);
+            color: var(--text-primary);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
             overflow-x: hidden;
+        }
+
+        /* --- Creative Branding Layout --- */
+        .navbar {
+            background: rgba(10, 20, 36, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--color-navy-line);
+            padding: 1.25rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand-identity {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .brand-logo-container {
+            position: relative;
+            width: 42px;
+            height: 42px;
+        }
+
+        .brand-logo-frame {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--color-royal-blue), var(--color-gold));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: var(--color-navy-deep);
+            font-size: 1.25rem;
+            box-shadow: 0 8px 24px var(--color-royal-glow);
+        }
+
+        .brand-logo-pulse {
+            position: absolute;
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
+            border: 1px solid var(--color-gold-bright);
+            border-radius: 14px;
+            opacity: 0.4;
+            animation: borderGlow 4s infinite linear;
+        }
+
+        .brand-meta h2 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            background: linear-gradient(to right, #FFFFFF, var(--color-text-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-meta span {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            display: block;
+        }
+
+        /* Functional Multi-Page App Navigation Architecture */
+        .nav-architecture {
+            display: flex;
+            background: var(--color-navy-main);
+            border: 1px solid var(--color-navy-line);
+            padding: 0.35rem;
+            border-radius: 30px;
+            gap: 0.25rem;
+        }
+
+        .nav-view-trigger {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            padding: 0.6rem 1.5rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-view-trigger:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-view-trigger.view-active {
+            background: var(--color-navy-surface);
+            color: var(--color-gold-bright);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        /* --- Status Dot Animation Layout --- */
+        .system-heartbeat {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: rgba(16, 185, 129, 0.04);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+        }
+
+        .status-dot-pulse {
+            width: 8px;
+            height: 8px;
+            background-color: var(--color-emerald);
+            border-radius: 50%;
             position: relative;
         }
 
-        /* Abstract Creative Background Elements */
-        body::before, body::after {
+        .status-dot-pulse::after {
             content: '';
             position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--color-emerald);
             border-radius: 50%;
-            z-index: -1;
-            filter: blur(80px);
-            opacity: 0.15;
+            animation: nodeHeartbeat 2.2s infinite cubic-bezier(0.25, 0, 0, 1);
         }
 
-        body::before {
-            width: 300px;
-            height: 300px;
-            background: var(--royal-blue);
-            top: 10%;
-            left: -5%;
-        }
-
-        body::after {
-            width: 250px;
-            height: 250px;
-            background: var(--gold);
-            bottom: 20%;
-            right: -5%;
-        }
-
-        /* Main Container */
-        .portal-container {
-            max-width: 800px;
-            width: 90%;
-            margin: 60px auto;
-            background: rgba(23, 42, 69, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 215, 0, 0.1);
-            border-radius: 16px;
-            padding: 40px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .portal-container:hover {
-            transform: translateY(-5px);
-            border-color: rgba(255, 215, 0, 0.3);
-            box-shadow: 0 25px 50px rgba(255, 215, 0, 0.05);
-        }
-
-        /* Header Style */
-        header {
-            text-align: center;
-            margin-bottom: 35px;
-            border-bottom: 2px solid rgba(65, 105, 225, 0.2);
-            padding-bottom: 20px;
-        }
-
-        h1 {
-            color: var(--gold);
-            font-size: 2.2rem;
-            letter-spacing: 1px;
+        .system-heartbeat span {
+            font-size: 0.75rem;
             font-weight: 700;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-        }
-
-        /* Content Sections */
-        .profile-section {
-            margin-bottom: 30px;
-        }
-
-        h2 {
-            color: var(--royal-blue);
-            font-size: 1.2rem;
+            color: var(--color-emerald);
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        /* --- Corporate Text Requirement Hero Block --- */
+        .corporate-hero {
+            text-align: center;
+            padding: 4rem 2rem 2.5rem 2rem;
+            position: relative;
+        }
+
+        .corporate-hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 50%; transform: translateX(-50%);
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, var(--color-royal-glow) 0%, transparent 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .corporate-hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #FFFFFF 30%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.75rem;
+        }
+
+        .corporate-hero p {
+            color: var(--color-gold);
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* --- Progressive App View Engine --- */
+        .app-view-container {
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 3rem 4rem 3rem;
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr;
+        }
+
+        .app-view {
+            display: none;
+            animation: viewFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            grid-column: 1;
+            grid-row: 1;
+        }
+
+        .app-view.view-render-active {
+            display: grid;
+        }
+
+        /* --- View 1: Highly Styled Micro-Dashboard Layout --- */
+        .dashboard-grid {
+            grid-template-columns: 1fr 2fr;
+            gap: 2.5rem;
+        }
+
+        .glass-card {
+            background: linear-gradient(145deg, var(--color-navy-main) 0%, rgba(17, 31, 53, 0.3) 100%);
+            border: 1px solid var(--color-navy-line);
+            border-radius: 24px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            transition: var(--transition-smooth);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(37, 99, 235, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6), 0 0 40px var(--color-royal-glow);
+        }
+
+        .card-decorator-edge {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 3px;
+            background: linear-gradient(to right, var(--color-royal-blue), transparent);
+        }
+
+        .glass-card.accent-gold .card-decorator-edge {
+            background: linear-gradient(to right, var(--color-gold), transparent);
+        }
+
+        .card-header-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--color-navy-line);
+            padding-bottom: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .card-title-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .card-title-group icon {
+            font-size: 1.25rem;
             display: flex;
             align-items: center;
         }
 
-        h2::after {
-            content: '';
-            flex-grow: 1;
-            height: 1px;
-            background: rgba(65, 105, 225, 0.2);
-            margin-left: 15px;
+        .card-title-group h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.2px;
         }
 
-        p {
-            color: var(--text-muted);
-            line-height: 1.6;
-            font-size: 1.05rem;
-        }
-
-        /* Interactive Tech Stack Tags */
-        .tech-stack {
+        /* Identity Profile Presentation Card Feature */
+        .profile-mesh-layout {
             display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 15px;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
         }
 
-        .tech-tag {
-            background: rgba(65, 105, 225, 0.1);
-            border: 1px solid rgba(65, 105, 225, 0.3);
-            color: var(--text-light);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            transition: all 0.2s ease;
-            cursor: default;
+        .avatar-telemetry-frame {
+            position: relative;
+            margin-bottom: 1.5rem;
         }
 
-        .tech-tag:hover {
-            background: var(--royal-blue);
-            color: #fff;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(65, 105, 225, 0.3);
+        .avatar-graphics {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--color-navy-surface) 0%, var(--color-navy-deep) 100%);
+            border: 2px solid var(--color-navy-line);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.25rem;
+            z-index: 2;
+            position: relative;
         }
 
-        /* Notification Badge Concept */
-        .status-badge {
-            display: inline-block;
-            background: rgba(255, 215, 0, 0.1);
-            color: var(--gold);
-            border: 1px solid var(--gold);
-            padding: 4px 12px;
-            border-radius: 50px;
+        .avatar-orbit-line {
+            position: absolute;
+            top: -6px; left: -6px; right: -6px; bottom: -6px;
+            border: 1px dashed var(--color-gold);
+            border-radius: 50%;
+            animation: spinOrbit 25s linear infinite;
+            opacity: 0.6;
+        }
+
+        .profile-mesh-layout p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Interactive Dynamic Asset Controls Feature */
+        .interactive-asset-deck {
+            background: rgba(3, 10, 22, 0.4);
+            border: 1px solid var(--color-navy-line);
+            border-radius: 16px;
+            padding: 1.25rem;
+            width: 100%;
+        }
+
+        .deck-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .deck-header-row h4 {
             font-size: 0.8rem;
-            font-weight: bold;
-            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+
+        .asset-switch-btn {
+            background: var(--color-royal-blue);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .asset-switch-btn:hover {
+            background: #3b82f6;
+            box-shadow: 0 0 12px rgba(59, 130, 246, 0.4);
+        }
+
+        .dynamic-terminal-readout {
+            background: #020617;
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--color-gold-bright);
+            text-align: left;
+            border-left: 2px solid var(--color-gold);
+            min-height: 58px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Highly Styled Toolstack Grid Features */
+        .system-toolstack-matrix {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1.25rem;
+            margin-top: 1.5rem;
+        }
+
+        .matrix-tool-node {
+            background: rgba(3, 10, 22, 0.5);
+            border: 1px solid var(--color-navy-line);
+            border-radius: 14px;
+            padding: 1.25rem 1rem;
+            text-align: center;
+            transition: var(--transition-smooth);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .matrix-tool-node:hover {
+            background: var(--color-navy-surface);
+            border-color: var(--color-royal-blue);
+            transform: scale(1.03);
+        }
+
+        .node-icon-graphic {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 32px;
+            color: var(--color-gold-bright);
+        }
+
+        .matrix-tool-node span:last-child {
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            color: var(--text-primary);
+        }
+
+        /* Metrics Layout Design Block */
+        .telemetry-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .telemetry-pod {
+            background: var(--color-navy-main);
+            border: 1px solid var(--color-navy-line);
+            padding: 1.5rem;
+            border-radius: 16px;
+            position: relative;
+            width: 100%;
+        }
+
+        .pod-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Live Activity Feature Stream UI */
+        .stream-terminal {
+            background: #040D1A;
+            border: 1px solid var(--color-navy-line);
+            border-radius: 16px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .stream-row-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.85rem 1.25rem;
+            background: var(--color-navy-main);
+            border-radius: 10px;
+            border-left: 3px solid var(--color-emerald);
+            font-size: 0.85rem;
+            transition: var(--transition-smooth);
+        }
+
+        .stream-row-item:hover {
+            background: rgba(30, 49, 77, 0.3);
+        }
+
+        .stream-row-item.compliance-line {
+            border-left-color: var(--color-gold);
+        }
+
+        .stream-msg-text {
+            font-family: var(--font-mono);
+            color: var(--text-primary);
+        }
+
+        .stream-clock-stamp {
+            font-family: var(--font-mono);
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
+
+        /* --- View 2: Multi-Page Infrastructure Control Terminal --- */
+        .infrastructure-view-layout {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .terminal-shell-box {
+            background: #020617;
+            border: 1px solid var(--color-navy-line);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+        }
+
+        .terminal-header-bar {
+            background: var(--color-navy-main);
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--color-navy-line);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .terminal-window-dots {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .window-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #EF4444;
+        }
+
+        .window-dot:nth-child(2) { background: #F59E0B; }
+        .window-dot:nth-child(3) { background: #10B981; }
+
+        .terminal-tab-label {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .terminal-body-console {
+            padding: 2rem;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #38BDF8;
+            min-height: 400px;
+            overflow-y: auto;
+        }
+
+        .console-input-block {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            background: rgba(15, 23, 42, 0.6);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .console-prompt-indicator {
+            color: var(--color-emerald);
+            font-weight: 700;
+        }
+
+        .console-interactive-field {
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            width: 100%;
+            outline: none;
+        }
+
+        /* Voice-To-Text UI Upgrade Features Component */
+        .voice-assist-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-smooth);
+            position: relative;
+        }
+
+        .voice-assist-btn:hover {
+            color: #EF4444;
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .voice-assist-btn.listening-active {
+            color: #FFFFFF;
+            background: #EF4444;
+            animation: micPulse 1.4s infinite ease-in-out;
+        }
+
+        /* --- View 3: Governance Compliance Module --- */
+        .governance-view-layout {
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .compliance-audit-node {
+            background: var(--color-navy-main);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid var(--color-navy-line);
+        }
+
+        .audit-badge-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.35rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 1.25rem;
+        }
+
+        .audit-badge-status.pass {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--color-emerald);
+        }
+
+        .compliance-audit-node h4 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .compliance-audit-node p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* --- Dynamic Fluid Sand & Navy Gradient Canvas Compliance Footer --- */
+        footer {
+            height: 90px;
+            position: relative;
+            margin-top: auto;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 3rem;
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.4);
+        }
+
+        .footer-canvas-background {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .footer-content-overlay {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #FFFFFF;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            text-shadow: 0 2px 8px rgba(3, 10, 22, 0.8);
+        }
+
+        .footer-compliance-group {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .footer-compliance-split-dot {
+            width: 5px;
+            height: 5px;
+            background-color: #FFFFFF;
+            border-radius: 50%;
+            opacity: 0.6;
+        }
+
+        .footer-signature-stamp {
+            font-family: var(--font-mono);
+            font-weight: 500;
+            font-size: 0.8rem;
+            background: rgba(3, 10, 22, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            backdrop-filter: blur(4px);
+        }
+
+        /* Responsive Breakpoints Rules */
+        @media (max-width: 1024px) {
+            .navbar { padding: 1.25rem 2rem; }
+            .app-view-container { padding: 0 2rem 3rem 2rem; }
+            .dashboard-grid { grid-template-columns: 1fr; gap: 2rem; }
+        }
+
+        @media (max-width: 680px) {
+            .navbar { flex-direction: column; gap: 1.25rem; padding: 1.5rem 1rem; }
+            .corporate-hero h1 { font-size: 2rem; }
+            footer { height: auto; padding: 2.5rem 1rem; }
+            .footer-content-overlay { flex-direction: column; gap: 1.25rem; text-align: center; }
+            .footer-compliance-group { flex-direction: column; gap: 0.5rem; }
+            .footer-compliance-split-dot { display: none; }
+        }
+
+        /* Keyframes Animations Design Rules */
+        @keyframes nodeHeartbeat {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(3.5); opacity: 0; }
+        }
+
+        @keyframes borderGlow {
+            0%, 100% { border-color: var(--color-gold-bright); box-shadow: 0 0 4px var(--color-gold-glow); }
+            50% { border-color: var(--color-royal-blue); box-shadow: 0 0 14px var(--color-royal-glow); }
+        }
+
+        @keyframes spinOrbit {
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes viewFadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes micPulse {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5); }
+            70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
         }
     </style>
 </head>
 <body>
 
-    <main class="portal-container">
-        <div class="status-badge">PORTAL ACTIVE</div>
-        
-        <header>
-            <h1>Elite Corp: DevOps Engineering Division</h1>
-        </header>
-        
-        <section class="profile-section">
-            <h2>Engineer Biography</h2>
-            <p>
-                As a newly contracted DevOps Engineer at Thanice fashion brand, I specialize in implementing scalable architecture, maintaining system high availability, and optimizing standardized Git-flow pipelines across international engineering teams.
-            </p>
-        </section>
-
-        <section class="profile-section">
-            <h2>Current DevOps Toolstack</h2>
-            <div class="tech-stack">
-                <span class="tech-tag">Git</span>
-                <span class="tech-tag">GitHub</span>
-                <span class="tech-tag">HTML & CSS</span>
+    <nav class="navbar">
+        <a href="#" class="brand-identity">
+            <div class="brand-logo-container">
+                <div class="brand-logo-frame">T</div>
+                <div class="brand-logo-pulse"></div>
             </div>
-        </section>
-    </main>
+            <div class="brand-meta">
+                <h2>Thanice</h2>
+                <span>Digital Portal Suite v2.6</span>
+            </div>
+        </a>
 
-    </body>
+        <div class="nav-architecture">
+            <button class="nav-view-trigger view-active" data-target="dashboard">
+                <span>📊</span> Dashboard
+            </button>
+            <button class="nav-view-trigger" data-target="infrastructure">
+                <span>⚡</span> Terminal
+            </button>
+            <button class="nav-view-trigger" data-target="governance">
+                <span>🛡️</span> Governance
+            </button>
+        </div>
+
+        <div class="system-heartbeat">
+            <div class="status-dot-pulse"></div>
+            <span id="active-node-id">Node: Hub_Main</span>
+        </div>
+    </nav>
+
+    <header class="corporate-hero">
+        <h1>Elite Corp: DevOps Engineering Division</h1>
+        <p>Continuous Integration Node / Peer-Review Platform</p>
+    </header>
+
+    <div class="app-view-container">
+
+        <main id="view-dashboard" class="app-view dashboard-grid view-render-active">
+            
+            <section class="glass-card">
+                <div class="card-decorator-edge"></div>
+                <div class="card-header-wrapper">
+                    <div class="card-title-group">
+                        <icon>👤</icon>
+                        <h3>Core Identity</h3>
+                    </div>
+                </div>
+                
+                <div class="profile-mesh-layout">
+                    <div class="avatar-telemetry-frame">
+                        <div class="avatar-graphics">👨‍💻</div>
+                        <div class="avatar-orbit-line"></div>
+                    </div>
+                    <p>
+                        Operating under the designated Shared Contribution paradigm. This interface controls production variables, standardizes deployment flows, and synchronizes asset dependencies across our engineering ecosystem.
+                    </p>
+
+                    <div class="interactive-asset-deck">
+                        <div class="deck-header-row">
+                            <h4>Active Configuration Asset</h4>
+                            <button class="asset-switch-btn" id="trigger-asset-rotation">Next Frame</button>
+                        </div>
+                        <div class="dynamic-terminal-readout" id="asset-manifest-terminal">
+                            Loading secure configuration manifest string...
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="glass-card accent-gold">
+                <div class="card-decorator-edge"></div>
+                <div class="card-header-wrapper">
+                    <div class="card-title-group">
+                        <icon>⚡</icon>
+                        <h3>Cluster Telemetry Stream</h3>
+                    </div>
+                </div>
+
+                <div class="telemetry-row">
+                    <div class="telemetry-pod">
+                        <div class="pod-header">
+                            <span>System Toolstack Matrix</span>
+                            <span style="color: var(--color-royal-blue)">● Active</span>
+                        </div>
+                        <div class="system-toolstack-matrix">
+                            <div class="matrix-tool-node">
+                                <span class="node-icon-graphic">📁</span>
+                                <span>Git</span>
+                            </div>
+                            <div class="matrix-tool-node">
+                                <span class="node-icon-graphic">☁️</span>
+                                <span>GitHub</span>
+                            </div>
+                            
+                            <div class="matrix-tool-node">
+                                <span class="node-icon-graphic">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+                                </span>
+                                <span>Mic & Voice</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-title-group" style="margin-bottom: 1rem;">
+                    <icon>📜</icon>
+                    <h3 style="font-size: 1rem; color: var(--text-secondary);">Distributed Audit Ledger</h3>
+                </div>
+                <div class="stream-terminal" id="audit-ledger-stream">
+                    <div class="stream-row-item">
+                        <span class="stream-msg-text">feat: initial deployment of employee portal asset</span>
+                        <span class="stream-clock-stamp">08:14:02 UTC</span>
+                    </div>
+                    <div class="stream-row-item compliance-line">
+                        <span class="stream-msg-text">fix: updated global footer for corporate compliance</span>
+                        <span class="stream-clock-stamp">11:42:19 UTC</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <main id="view-infrastructure" class="app-view infrastructure-view-layout">
+            <div class="terminal-shell-box">
+                <div class="terminal-header-bar">
+                    <div class="terminal-window-dots">
+                        <div class="window-dot"></div>
+                        <div class="window-dot"></div>
+                        <div class="window-dot"></div>
+                    </div>
+                    <div class="terminal-tab-label">thanice-cluster-node ~ bash</div>
+                </div>
+                <div class="terminal-body-console" id="console-output-stream">
+                    <div>⚡ Thanice Infrastructure Deployment Assistant Initialized.</div>
+                    <div>[INFO] Type 'help' or click the microphone to dictate diagnostic parameters.</div>
+                    <br>
+                </div>
+                <div class="console-input-block">
+                    <span class="console-prompt-indicator">devops@thanice-node:~$</span>
+                    <input type="text" class="console-interactive-field" id="terminal-user-input" autocomplete="off" placeholder="Enter parameters or use mic input...">
+                    
+                    <button class="voice-assist-btn" id="terminal-voice-trigger" title="Speak command parameter">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <main id="view-governance" class="app-view governance-view-layout">
+            <div class="compliance-audit-node">
+                <div class="audit-badge-status pass">Pass</div>
+                <h4>Shared Contribution Schema</h4>
+                <p>Enforces authorization checks across all peer nodes. Validates branch mutations and prevents unmapped directory commits from pushing to master repositories without cryptographically secure signatures.</p>
+            </div>
+            <div class="compliance-audit-node">
+                <div class="audit-badge-status pass">Nominal</div>
+                <h4>Automated Audit Ledger Sync</h4>
+                <p>Continuous validation loop running across distributed environment targets. Ensures local workspace snapshots map directly to global corporate version policies via atomic lifecycle loops.</p>
+            </div>
+        </main>
+
+    </div>
+
+    <footer>
+        <canvas class="footer-canvas-background" id="sand-flow-vector-engine"></canvas>
+        <div class="footer-content-overlay">
+            <div class="footer-compliance-group">
+                <span>System Status: Operational</span>
+                <div class="footer-compliance-split-dot"></div>
+                <span>Managed by Thanice fashion brand DevOps</span>
+            </div>
+            <div class="footer-signature-stamp">SECURE CLUSTER // ID-9982X</div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- Progressive Multi-Page View Routing Controller ---
+            const navigationTriggers = document.querySelectorAll('.nav-view-trigger');
+            const applicationViews = document.querySelectorAll('.app-view');
+
+            navigationTriggers.forEach(trigger => {
+                trigger.addEventListener('click', () => {
+                    const viewTarget = trigger.getAttribute('data-target');
+                    
+                    navigationTriggers.forEach(t => t.classList.remove('view-active'));
+                    applicationViews.forEach(v => v.classList.remove('view-render-active'));
+                    
+                    trigger.classList.add('view-active');
+                    document.getElementById(`view-${viewTarget}`).classList.add('view-render-active');
+                    
+                    if(viewTarget === 'infrastructure') {
+                        document.getElementById('terminal-user-input').focus();
+                    }
+                });
+            });
+
+            // --- Interactive Dynamic Configuration Asset State Management ---
+            const infrastructureAssetManifest = [
+                "thanice-portal-asset // prod-branch-main",
+                "identity-page-matrix // compiled-css-minified",
+                "compliance-footer-hash // active-node-signed",
+                "peer-review-handshake // verified-collaborator-key"
+            ];
+            
+            let manifestPointer = 0;
+            const assetTerminalDisplay = document.getElementById('asset-manifest-terminal');
+            const rotateManifestTrigger = document.getElementById('trigger-asset-rotation');
+
+            function renderManifestState() {
+                if(assetTerminalDisplay) {
+                    assetTerminalDisplay.textContent = `> ${infrastructureAssetManifest[manifestPointer]}`;
+                }
+            }
+            
+            if(rotateManifestTrigger) {
+                rotateManifestTrigger.addEventListener('click', () => {
+                    manifestPointer = (manifestPointer + 1) % infrastructureAssetManifest.length;
+                    renderManifestState();
+                });
+            }
+            renderManifestState();
+
+            // --- Terminal Shell Interactive Mock Script Logic ---
+            const commandInputField = document.getElementById('terminal-user-input');
+            const terminalConsoleOutput = document.getElementById('console-output-stream');
+
+            const automatedShellResponseMap = {
+                'help': "Available options:\n  - status : Evaluates cluster environmental nodes.\n  - toolstack : Projects structural deployment dependencies.\n  - clear : Flushes data buffers from this view matrix.",
+                'status': "[OK] Node: Hub_Main mapping consistent.\n[OK] Configuration payload parsed perfectly.\n[COMPLIANCE] Verification String matched: Managed by Thanice fashion brand DevOps.",
+                'toolstack': "Configured Toolset Matrix:\n  - Engine 1: Git Core [v2.46.0]\n  - Engine 2: GitHub Cloud Integration Subsystem\n  - Engine 3: Mic & Voice Integration Architecture Module",
+                'clear': "CLEAR_BUFFER"
+            };
+
+            function processTerminalCommand(rawInput) {
+                const parsingRawInput = rawInput.trim();
+                const operationalQuery = parsingRawInput.toLowerCase();
+
+                if (!parsingRawInput) return;
+
+                appendTerminalLine(`devops@thanice-node:~$ ${parsingRawInput}`, '#FFFFFF');
+
+                if (automatedShellResponseMap[operationalQuery]) {
+                    if (automatedShellResponseMap[operationalQuery] === 'CLEAR_BUFFER') {
+                        terminalConsoleOutput.innerHTML = '';
+                    } else {
+                        const outputArray = automatedShellResponseMap[operationalQuery].split('\n');
+                        outputArray.forEach(line => appendTerminalLine(line, '#38BDF8'));
+                    }
+                } else {
+                    appendTerminalLine(`[ERROR] Standard shell parameter mapping failed for string context: "${parsingRawInput}".`, '#EF4444');
+                }
+            }
+
+            if(commandInputField) {
+                commandInputField.addEventListener('keydown', (event) => {
+                    if (event.key === 'Enter') {
+                        processTerminalCommand(commandInputField.value);
+                        commandInputField.value = '';
+                    }
+                });
+            }
+
+            function appendTerminalLine(textValue, hexColorString) {
+                if(!terminalConsoleOutput) return;
+                const textLineWrapperNode = document.createElement('div');
+                textLineWrapperNode.style.color = hexColorString;
+                textLineWrapperNode.style.whiteSpace = 'pre-wrap';
+                textLineWrapperNode.style.marginTop = '0.25rem';
+                textLineWrapperNode.textContent = textValue;
+                terminalConsoleOutput.appendChild(textLineWrapperNode);
+                terminalConsoleOutput.scrollTop = terminalConsoleOutput.scrollHeight;
+            }
+
+            // --- Practical Voice to Text Modality Subsystem Implementation ---
+            const voiceTriggerButton = document.getElementById('terminal-voice-trigger');
+            const SpeechRecognitionEngine = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+            if (SpeechRecognitionEngine && voiceTriggerButton) {
+                const recognitionInstance = new SpeechRecognitionEngine();
+                recognitionInstance.continuous = false;
+                recognitionInstance.lang = 'en-US';
+                recognitionInstance.interimResults = false;
+                recognitionInstance.maxAlternatives = 1;
+
+                recognitionInstance.onstart = () => {
+                    voiceTriggerButton.classList.add('listening-active');
+                    if(commandInputField) commandInputField.placeholder = "Listening attentively to audio parameters...";
+                };
+
+                recognitionInstance.onerror = (err) => {
+                    console.error("Speech module encountered variance context:", err.error);
+                    appendTerminalLine(`[SYSTEM MIC ERROR]: Interface handling error: ${err.error}`, '#EF4444');
+                    resetVoiceUIState();
+                };
+
+                recognitionInstance.onend = () => {
+                    resetVoiceUIState();
+                };
+
+                recognitionInstance.onresult = (event) => {
+                    const speechToTextOutputString = event.results[0][0].transcript;
+                    if(commandInputField) {
+                        commandInputField.value = speechToTextOutputString;
+                        processTerminalCommand(speechToTextOutputString);
+                        commandInputField.value = '';
+                    }
+                };
+
+                voiceTriggerButton.addEventListener('click', () => {
+                    if (voiceTriggerButton.classList.contains('listening-active')) {
+                        recognitionInstance.stop();
+                    } else {
+                        recognitionInstance.start();
+                    }
+                });
+            } else if(voiceTriggerButton) {
+                voiceTriggerButton.style.opacity = '0.3';
+                voiceTriggerButton.title = "Speech Recognition APIs not supported on this browser engine Node.";
+                voiceTriggerButton.addEventListener('click', () => {
+                    appendTerminalLine("[SYSTEM INFO]: Web Speech API is unavailable inside this browser workspace context.", '#ECC200');
+                });
+            }
+
+            function resetVoiceUIState() {
+                if(!voiceTriggerButton) return;
+                voiceTriggerButton.classList.remove('listening-active');
+                if(commandInputField) commandInputField.placeholder = "Enter parameters or use mic input...";
+            }
+
+            // --- Dynamic Audit Ledger Stream Simulator ---
+            const ledgerStreamTarget = document.getElementById('audit-ledger-stream');
+            const mockupActionsPool = [
+                { msg: "origin/main sync completed cleanly", style: "" },
+                { msg: "git pull validation loop verified master branch compliance", style: "compliance-line" },
+                { msg: "deployment payload pushed to cloud successfully", style: "" }
+            ];
+
+            setInterval(() => {
+                if(!ledgerStreamTarget) return;
+                const selectItemIndex = Math.floor(Math.random() * mockupActionsPool.length);
+                const targetedData = mockupActionsPool[selectItemIndex];
+                const activeClockTime = new Date().toLocaleTimeString('en-US', { hour12: false });
+
+                const appendRowElement = document.createElement('div');
+                appendRowElement.className = `stream-row-item ${targetedData.style}`;
+                appendRowElement.innerHTML = `
+                    <span class="stream-msg-text">${targetedData.msg}</span>
+                    <span class="stream-clock-stamp">${activeClockTime} UTC</span>
+                `;
+
+                ledgerStreamTarget.appendChild(appendRowElement);
+                if (ledgerStreamTarget.children.length > 5) {
+                    ledgerStreamTarget.removeChild(ledgerStreamTarget.children[0]);
+                }
+            }, 7000);
+
+            // --- Dynamic Navy Blue & Gold Fluid Sand Canvas Flow Subsystem ---
+            const flowCanvas = document.getElementById('sand-flow-vector-engine');
+            if(flowCanvas) {
+                const flowCtx = flowCanvas.getContext('2d');
+                let canvasParticlesArray = [];
+
+                function sizeFluidCanvas() {
+                    const boundBox = flowCanvas.parentElement.getBoundingClientRect();
+                    flowCanvas.width = boundBox.width;
+                    flowCanvas.height = boundBox.height;
+                }
+
+                class SandFlowParticle {
+                    constructor() {
+                        this.resetNodeProperties();
+                        this.x = Math.random() * flowCanvas.width; 
+                    }
+                    resetNodeProperties() {
+                        this.x = -10;
+                        this.y = Math.random() * flowCanvas.height;
+                        this.radiusSize = Math.random() * 2 + 0.6;
+                        this.translationVelocityX = Math.random() * 1.4 + 0.5;
+                        this.waveFrequencyY = Math.random() * 0.015 + 0.005;
+                        this.waveAmplitudeY = Math.random() * 12 + 4;
+                        this.basePositionY = this.y;
+                        
+                        // Refined Organic Sand & Deep Navy Blend Palette
+                        const colorDiceRoll = Math.random();
+                        if(colorDiceRoll > 0.5) {
+                            // Shimmering Gold Grain
+                            this.colorStyle = `rgba(255, 215, 0, ${Math.random() * 0.35 + 0.15})`;
+                        } else if (colorDiceRoll > 0.25) {
+                            // Translucent Sand Tan
+                            this.colorStyle = `rgba(244, 196, 48, ${Math.random() * 0.25 + 0.1})`;
+                        } else {
+                            // Mid-stream Cerulean Navy Vein
+                            this.colorStyle = `rgba(37, 99, 235, ${Math.random() * 0.3 + 0.1})`;
+                        }
+                    }
+                    updateDataCycle() {
+                        this.x += this.translationVelocityX;
+                        this.y = this.basePositionY + Math.sin(this.x * this.waveFrequencyY) * this.waveAmplitudeY;
+                        
+                        if (this.x > flowCanvas.width + 10) {
+                            this.resetNodeProperties();
+                        }
+                    }
+                    drawVectorGraphic() {
+                        flowCtx.beginPath();
+                        flowCtx.arc(this.x, this.y, this.radiusSize, 0, Math.PI * 2);
+                        flowCtx.fillStyle = this.colorStyle;
+                        flowCtx.fill();
+                    }
+                }
+
+                function initializeFlowEngine() {
+                    sizeFluidCanvas();
+                    canvasParticlesArray = [];
+                    // Generate fluid velocity vectors relative to workspace geometry
+                    const calculateVolumeDensity = Math.min(Math.floor(flowCanvas.width / 4.5), 220);
+                    for (let idx = 0; idx < calculateVolumeDensity; idx++) {
+                        canvasParticlesArray.push(new SandFlowParticle());
+                    }
+                }
+
+                function frameRenderLoop() {
+                    // Create base dynamic navy-to-gold gradient matrix background
+                    const dynamicGrad = flowCtx.createLinearGradient(0, 0, flowCanvas.width, flowCanvas.height);
+                    dynamicGrad.addColorStop(0, '#030914');   // Infinite deep navy anchor
+                    dynamicGrad.addColorStop(0.4, '#0A1B35'); // Vibrant mid-tone ocean channel
+                    dynamicGrad.addColorStop(0.8, '#1A335B'); // Soft marine transition field
+                    dynamicGrad.addColorStop(1, '#917200');   // Rich dark gold baseline basin
+                    
+                    flowCtx.fillStyle = dynamicGrad;
+                    flowCtx.fillRect(0, 0, flowCanvas.width, flowCanvas.height);
+
+                    // Render unified array lifecycle matrices
+                    for (let elementIdx = 0; elementIdx < canvasParticlesArray.length; elementIdx++) {
+                        canvasParticlesArray[elementIdx].updateDataCycle();
+                        canvasParticlesArray[elementIdx].drawVectorGraphic();
+                    }
+                    requestAnimationFrame(frameRenderLoop);
+                }
+
+                window.addEventListener('resize', () => {
+                    sizeFluidCanvas();
+                });
+                
+                initializeFlowEngine();
+                frameRenderLoop();
+            }
+        });
+    </script>
+</body>
 </html>
